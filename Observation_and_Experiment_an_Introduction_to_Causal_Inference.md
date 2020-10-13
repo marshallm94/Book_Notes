@@ -4,6 +4,22 @@
 
 [Book Link](https://www.amazon.com/Observation-Experiment-Introduction-Causal-Inference/dp/0674241630/ref=sr_1_1?crid=UQIIXTVGBIRX&dchild=1&keywords=observation+and+experiment+an+introduction+to+causal+inference&qid=1601735207&sprefix=Observation+and+ex%2Caps%2C157&sr=8-1)
 
+## Unorganized Thoughts
+
+* Quote (page 38): "People often want more than this from a test of a null
+  hypothesis. They desire to know whether the hypothesis is true or false, not
+  whether available data constitute strong evidence against the null hypothesis
+  or else provide little guidance about its truth. This is a forlorn desire, for
+  it is not hypothesis testing but the world itself that refuses to comply."
+	* "Can you prove causality with statistics?"
+		* Beyond **all doubt**, no; beyond **a reasonable doubt**,
+		  absolutely.
+
+* Quote (page 44): "It is an enormous, unforgivable mistake to interpret
+  'accepting the null hypothesis' as providing evidence that the null
+  hypothesis is true. 'Accepting a null hypothesis' means failing to provide
+  much evidence about whether it is true or false."
+
 ## Chapter Summaries
 
 ### 1
@@ -27,6 +43,22 @@
 * The **average** causal effect of a treatment **can** be inferred -
   randomized group assignment allows an estimate of the average treatment effect
   and an estimate of the average control (no treatment) effect.
+
+### 3
+
+* Uniformity trial - An experiment (often ran in the 1920's and 1930's) where the
+  distinction between treatment and control groups was retained, however **both
+  groups received the same treatment (or both groups didn't receive
+  treatment).** This allows one to think about one of the fundamental questions 
+  of hypothesis testing, "What could we expect to happen that is due to chance
+  variation?"
+	* Typically used in an agricultural context to determine if fertilizer
+	A was better than fertilizer B, a farm would be randomly divided into
+	many plots and assign a plot to use either fertilizer A or B. **However,
+	all plots were treated the same way (either fertilizer A or B) - giving
+	the investigator an answer to the question, "What can be expected due to
+	random variation?"
+
 
 ## Reasoning Checks
 
@@ -113,6 +145,17 @@ P(X = 4) & = 0.2734
 
 \end{align}
 $$
+
+### Page 45 "Fisher's Exact Test; the 'Reasoned Bases for Inference'"
+
+* "The word 'exact' means that the distribution in Table 3.5 is exactly the
+  distribution of the test statistic $T$ in a completely randomized experiment
+  when Fisher's null hypothesis is true. That is, Table 3.5 is exactly the null
+  distribution of $T$, not an approximation to its null distribution."
+	* Rosenbaum hints at the fact that distribution approximations are
+	  usually okay and are widely used in statistics. However, if one can
+	  avoid them, that is one assumption less to worry about being wrong.
+	* 
 
 ### Page 271: "...Do high-level NICU's save more lives?"
 
