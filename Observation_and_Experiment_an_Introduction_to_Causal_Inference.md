@@ -73,8 +73,90 @@
 
   So, it assumed that nothing would change if the group assignment vector had
   been different. Hypothesis testing then answers the question, "What is the
-  probability that the group assignment vector that was chosen, would have been
-  chosen"
+  probability that the group assignment vector that was chosen, was in fact
+  chosen?" If there is alignment between the chosen group assignment vector and
+  the observed response vector, and the probability that the group assignment
+  vector was chosen is sufficient low, we suspect there is enough evidence to
+  say
+
+$$
+\begin{align}
+\text{Observed Group Assignment Vector} & = \left[ T_1, T_2, C_3, T_4, T_5, T_6, C_7, C_8, C_9, C_{ 10 } \right] \\
+\text{Observed Response Vector} & = \left[ 1_1, 0_2, 0_3, 1_4, 1_5, 1_6, 0_7, 0_8, 1_9, 0_{ 10 } \right] \\
+\end{align}
+$$
+
+In this scenario, there are 10 subjects (see subscripts), with 5 in the control
+group and 5 in the treatment group.
+
+$$
+{n \choose k} = \frac{ n! }{ (n - k)! \cdot k! } = \frac{ 10! }{ (10 - 5)! \cdot
+5! } = \frac{ 10! }{ 5! \cdot 5!} =
+
+\frac{10 \cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot \cancel{ 5 } \cdot \cancel{ 4 }
+\cdot \cancel{ 3 } \cdot
+\cancel{2} \cdot \cancel{1}}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 \cdot \cancel{5}
+\cdot \cancel{ 4 } \cdot \cancel{ 3 } \cdot \cancel{2} \cdot \cancel{1}} =
+
+\frac{ 30,240 } { 120 } = 252 
+$$
+
+Which means there are 252 ways to have 5 subjects in the treatment group and 5
+subjects in the control group. Since our Group Assignment Vector is one of those
+252, the probability it was chosen is $\frac{1}{252}$, just like all the others.
+
+```R
+                       Observed_Response_Vector
+Group_Assignment_Vector 0 1
+              Control   4 1
+              Treatment 1 4(T)
+```
+
+The contingency table above shows the relationship between the two variables.
+The question now becomes, "In how many of the 252 possible group assignment
+vectors would we see a similar result?" More specifically, "What proportion
+of the 252 possible group assignment vectors would have 4 or more treated
+subjects with a positive outcome (Observed_Response_Vector = 1)?"
+
+Once again, the wording of Fisher's hypothesis of no effect sets up a direct
+answer to this question; since the hypothesis states that the Observed Response
+Vector would not change, we can computationally create all 252 versions of the
+above table and calculate the T statistic and therefore the p value:
+
+```R
+#####################################
+# Everything that could have happened
+#####################################
+Observed_Response_Vector <- c(1,0,0,1,1,1,0,0,1,0)
+possible_treatment_group_assignment_vectors <- t( combn(10, 5) )
+
+null_distribution_T <- c()
+for (i in 1:dim(possible_treatment_group_assignment_vectors)[1]) {
+
+	idx <- possible_treatment_group_assignment_vectors[i,]
+	group_assignment_vector <- rep(0, 10)
+	group_assignment_vector[idx] <- 1
+
+	T_ <- group_assignment_vector %*% Observed_Response_Vector
+	null_distribution_T <- c(null_distribution_T, T_)
+}
+
+manual_p_val <- 2 * length( null_distribution_T[null_distribution_T >= 4] ) / length(null_distribution_T)
+
+#####################################
+# What actually happened
+#####################################
+Observed_Treatment_Group_idx <- possible_treatment_group_assignment_vectors[22,]
+Observed_Group_Assignment_Vector <- rep(0, 10)
+Observed_Group_Assignment_Vector[Observed_Treatment_Group_idx] <- 1
+
+comp_p_val <- fisher.test( Observed_Group_Assignment_Vector, Observed_Response_Vector )[[ 'p.value' ]]
+
+all.equal( manual_p_val, comp_p_val )
+
+> manual_p_val
+[1] 0.2063492
+```
 
 ## Reasoning Checks
 
@@ -90,7 +172,6 @@ the **bold 0** doesn't change that fact), the formula for combinations should be
 used:
 
 $$
-
 {n \choose k} = \frac{ n! }{ (n - k)! \cdot k! } = \frac{ 8! }{ (8 - 4)! \cdot
 4! } = \frac{ 8! }{ 4! \cdot 4!} =
 
@@ -99,7 +180,6 @@ $$
 \cancel{ 3 } \cdot \cancel{2} \cdot \cancel{1}} =
 
 \frac{ 1680 } { 24 } = 70
-
 $$
 
 This gives us the number of unique ways that 8 items can be arranged when order
@@ -110,13 +190,11 @@ each number below indicates the patient ID, while the number 1 or 0 indicates if
 patient $i$ was in the treatment group (1) or the control group (0).
 
 $$
-
 \left[ 1_1,1_2,1_3,1_4,0_5,0_6,0_7,0_8 \right] \\ \left[
 1_1,1_2,1_3,0_4,1_5,0_6,0_7,0_8 \right] \\ \left[
 1_1,1_2,1_3,0_4,0_5,1_6,0_7,0_8 \right] \\ \vdots \\ \left[
 0_1,0_2,0_3,1_4,0_5,1_6,1_7,1_8 \right] \\ \left[
 0_1,0_2,0_3,0_4,1_5,1_6,1_7,1_8 \right] \\
-
 $$
 
 Re-written to illustrate the the probabilistic underpinnings of the "Binary
@@ -128,7 +206,6 @@ that patient $i$ ended up in the control group (0), whereas a normal typeface
 $0.5_i$ will indicate that patient $i$ ended up in the treatment group (1))
 
 $$
-
 \left[ 0.5_1,0.5_2,.0.5_3,0.5_4,\pmb{ 0.5_5 },\pmb{ 0.5_6 },\pmb{ 0.5_7 },\pmb{
 0.5_8 } \right] \\ \left[ 0.5_1,0.5_2,.0.5_3,\pmb{ 0.5_4 },0.5_5,\pmb{ 0.5_6
 },\pmb{ 0.5_7 },\pmb{ 0.5_8 } \right] \\ \left[ 0.5_1,0.5_2,.0.5_3,\pmb{ 0.5_4
@@ -136,7 +213,6 @@ $$
 \pmb{ 0.5_1 },\pmb{ 0.5_2 },.\pmb{ 0.5_3 },0.5_4,\pmb{ 0.5_5 },0.5_6,0.5_7,0.5_8
 \right] \\ \left[ \pmb{ 0.5_1 },\pmb{ 0.5_2 },.\pmb{ 0.5_3 },\pmb{ 0.5_4
 },0.5_5,0.5_6,0.5_7,0.5_8 \right] \\
-
 $$
 
 The above is the "expanded" version of the Binomial PMF (shown below) when $n =
