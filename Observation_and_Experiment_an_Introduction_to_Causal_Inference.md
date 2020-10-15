@@ -59,6 +59,22 @@
 	the investigator an answer to the question, "What can be expected due to
 	random variation?"
 
+* The wording of Fisher's hypothesis of no affect (see Page 349 reasoning check)
+  is very useful in building the intution of causal inference in hypothesis
+  testing.
+
+  Fisher's hypothesis of no affects states that each subject would have the same
+  response that was observed whether they were in the treatment or control
+  group. Said slightly differently, if a subject received the treatment and had
+  a positive outcome, they would have experienced that positive outcome even if
+  they were in the control group. Conversely, if a subject that didn't receive
+  treatment (i.e. was in the control group) had a negative outcome, they would
+  have experienced that negative outcome even if they had received treatment.
+
+  So, it assumed that nothing would change if the group assignment vector had
+  been different. Hypothesis testing then answers the question, "What is the
+  probability that the group assignment vector that was chosen, would have been
+  chosen"
 
 ## Reasoning Checks
 
@@ -159,8 +175,6 @@ $$
 
 ### Page 271: "...Do high-level NICU's save more lives?"
 
-
-
 * This is a question that is a clear example of the need to ensure that one is
   comparing two things that are indeed comparable. Right off the bat, I could
   see how an un-inquisitive investigator, if he did not use matching techniques,
@@ -184,4 +198,11 @@ $$
 There are "known known's" ($x_i$), there are "known unknown's" ($u_i$) and
 finally the "Unknown unknown's" (covariates that you are completely unaware of
 that might bias the outcome)
+
+### Page 349: Fisher's null hypothesis of no difference in treatment effects
+
+"This null hypothesis, $H_0$, asserts that each person would have the same
+response under treatment as under control, $r_{Ti} - r_{Ci} = 0$ for $i = 1,
+\cdots, I$, or equivalently, $\delta_i = 0$ for $i = 1, \cdots , I$. Often
+abbreviated as Fisher's hypothesis of no effect."
 
