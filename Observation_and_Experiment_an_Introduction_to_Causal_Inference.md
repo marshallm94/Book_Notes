@@ -20,7 +20,7 @@
   hypothesis is true. 'Accepting a null hypothesis' means failing to provide
   much evidence about whether it is true or false."
 
-## Chapter Summaries
+## Chapter Insights
 
 ### 1
 
