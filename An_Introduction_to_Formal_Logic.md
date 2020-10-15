@@ -34,7 +34,15 @@ arguments? Which of these arguments [are deductively valid]?"
 	* Inference marker(s): so
 	* Conclusion: She (Jane) will at least get a B.
 	* **Deductively valid**: 'Anyone' is similar to 'all' - so this argument
-	  follows the "All *F* are *G* - *n* is *F* - so *n* is *G*" schema.
+	  follows the below schema:.
+
+$$
+\text{ All F are G } \\
+n\text{ is F } \\
+\text{Therefore } n \text{ is G } \\
+$$
+
+![](images/An_Introduction_to_Formal_Logic/2.png)
 
 3. John is taller than Marcy and Jane is shorter than Marcy. So John is taller
    than Jane.
@@ -81,6 +89,12 @@ $$
 	* Inference marker(s): so (implicit?)
 	* Conclusion: The Democrats will win the election.
 	* **Deductively valid** 
+		* [From answers online] - Not valid inference. The Democrats can
+		  stiall have a lead both in polling and popular vote on the day
+		  and yet lose ... To get a valid inference, we'd have to add a
+		  missing premise ruling out that possibility.
+		* The premise you could add might be - "Whichever party is ahead
+		  in the polls on election day wins the election."
 	
 6. Dogs have four legs. Fido is a dog. Therefore Fido has four legs.
 	* (too simple to be worth writing out)
@@ -89,6 +103,12 @@ $$
 n\text{ is F } \\
 \text{Therefore } n \text{ is G } \\
 $$
+	* [From answers online] - Should have paid attention; there is no "All"
+	  in the argument. "All dogs have four legs. Fido is a dog. Therefore
+	  Fido has four legs." is a valid inference. However, some dogs might
+	  not have four legs (accident, birth defect, etc.), so there is some
+	  possibility that Fido is one of these less fortunate dogs and does not
+	  have four legs.
 
 7.  Jekyll isn't the same person as Hyde. The reason is that no murderers are
     sane - but Hyde is a murderer, and Jekyll is certainly sane.
