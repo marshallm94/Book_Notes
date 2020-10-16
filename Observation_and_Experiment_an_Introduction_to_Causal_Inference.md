@@ -238,7 +238,7 @@ P(X = 4) & = 0.2734
 \end{align}
 $$
 
-### Page 45 "Fisher's Exact Test; the 'Reasoned Bases for Inference'"
+### Page 45 "Fisher's Exact Test; the 'Reasoned Basis for Inference'"
 
 * "The word 'exact' means that the distribution in Table 3.5 is exactly the
   distribution of the test statistic $T$ in a completely randomized experiment
@@ -248,6 +248,15 @@ $$
 	  usually okay and are widely used in statistics. However, if one can
 	  avoid them, that is one assumption less to worry about being wrong.
 	* 
+
+### Page 60 "So volunteering and self-selection in the randomized trial did nothing to create bias in the comparison of treated and control groups."
+
+* This sentence touches again on a main theme of the book; random group
+  assignment **ensures** that there isn't some unobserved group assignment
+  algorithm, while this can never be gauranteed with observational studies. More
+  specifically, ensuring that random group assignment is performed **after**
+  anyone that doesn't want to participate in the study drops out is what
+  gaurantees the above sentence.
 
 ### Page 271: "...Do high-level NICU's save more lives?"
 
