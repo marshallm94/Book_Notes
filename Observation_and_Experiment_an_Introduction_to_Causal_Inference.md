@@ -86,12 +86,11 @@
   have experienced that negative outcome even if they had received treatment.
 
   So, it assumed that nothing would change if the group assignment vector had
-  been different. Hypothesis testing then answers the question, "What is the
-  probability that the group assignment vector that was chosen, was in fact
-  chosen?" If there is alignment between the chosen group assignment vector and
-  the observed response vector, and the probability that the group assignment
-  vector was chosen is sufficient low, we suspect there is enough evidence to
-  say
+  been different. With this in mind, hypothesis testing answers the question,
+  "In how many of the ${n \choose k}$ possible group assignment vectors would we
+  have observed results as extreme or more extreme than those that were observed?"
+
+Example:
 
 $$
 \begin{align}
@@ -130,7 +129,7 @@ The contingency table above shows the relationship between the two variables.
 The question now becomes, "In how many of the 252 possible group assignment
 vectors would we see a similar result?" More specifically, "What proportion
 of the 252 possible group assignment vectors would have 4 or more treated
-subjects with a positive outcome (Observed_Response_Vector = 1)?"
+subjects with a positive outcome (`Observed_Response_Vector` = 1)?"
 
 Once again, the wording of Fisher's hypothesis of no effect sets up a direct
 answer to this question; since the hypothesis states that the Observed Response
@@ -171,6 +170,59 @@ all.equal( manual_p_val, comp_p_val )
 > manual_p_val
 [1] 0.2063492
 ```
+
+### 5
+
+* "The central problem in an observational study - **the problem that defines the
+  distinction between a randomized experiment and an observational study** - is
+  that treatments are not assigned to subjects at random."
+
+  The **Propensity Score** is at least one of, if not [the central tool](https://academic.oup.com/biomet/article/70/1/41/240879?searchresult=1) in attempting to 
+  reign in the downstream effects of this fact. The propensity score is the
+  conditional probability of treatment given the observed covariates, $P(Z = 1 | X)$.
+  In other words, given a data set, and two covariates (i.e age & sex), the
+  propensity score of 50 years old males is the average of the group assignment
+  vector for 50 year old males. This can be interpretted as the "propensity
+  towards exposure to treatment."
+
+  This score can be used to create matched pairs; where subjects with the same
+  propensity score and observed covariates are matched, ensuring that one subject
+  is in the treatment group and one is in the control group. This allows
+  investigators to more accurately estimate treatment effects since their
+  estimate can't be skewed by an imbalance in one of the observed covariates.
+
+  Example: A financial aptitude test is given at the of each school year to a
+  group of 13-15 year olds. 100 teachers teach curriculum A, and 100 teachers
+  teach curriculum B. The study aim is to determine which curriculum leads to
+  higher test scores. If an investigator were to ignore propensity score and
+  just compare the two groups, the estimate might be misleading; What if the
+  students that were taught curriculum A were mostly from higher income
+  households and neighborhoods, where financial literaly is taught at a younger
+  age? What if the students that were taught curriculum B study 4 more hours per
+  night than those that were taught curriculum A? These are both examples of
+  covariates (perhaps observed, perhaps unobserved) that would bias the
+  estimate. The proper thing to do would be to create matched pairs of one
+  curriculum A student and one curriculum B student who are similar in terms of
+  observed covariates and propensity scores.
+
+  What is the probability that a student who studies 4 extra hours per night
+  and comes from a low income household was taught curriculum A? Find a student
+  who studies the same amount and also comes from a low income household and was
+  taught curriculum B. This is one pair. Repeat for the entire data set.
+
+  It is important to note that although matching and using propensity scores
+  balances for observed covariates, **there is no basis to assume that
+  unobserved covariates are balanced.**
+
+* Note: The propensity score $\lambda_i$, is **not** the same as the *True*
+  probability of treatment $\pi_i$. To reiterate, the propensity score is the
+  **average** probability of treatment given observed covariate(s) $x$. **It is
+  created from the data you have, and thus suffers from the same critique that
+  all data sets suffer from; "What isn't within the data that is effecting
+  it?"**Two subjects could have the same propensity score because they have the
+  same measured covariates, $\lambda_i = \lambda_j$, however their actual
+  probabilities of treatment are different, $\pi_i \ne \pi_j$, due to some
+  unmeasured covariate.
 
 ## Reasoning Checks
 
