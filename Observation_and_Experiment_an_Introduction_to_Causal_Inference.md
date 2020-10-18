@@ -20,6 +20,20 @@
   hypothesis is true. 'Accepting a null hypothesis' means failing to provide
   much evidence about whether it is true or false."
 
+* (page 77): The outlined section makes the point that if an investigator were
+  to say, "this treatment has an effect" without looking into whether an
+  observed or unobserved covariate affects the probability of receiving
+  treatment, he would be making a mistake.
+
+  To me the question then becomes how can an observational study **ever**
+  overcome this argument? If an extremely cautious investigator adjusts for
+  observed covariates $x_1, x_2, x_3$ and additionally makes note of
+  unobserved covariates $u_1, u_2, u_3$, what is stopping a critic from saying,
+  "But did you consider unobserved covariate $u_4$?" It seems as though one
+  would run into an infinite regress of sorts (I would guess that this is the
+  beauty of randomization and there is no way to get around the infinite regress
+  with observational studies).
+
 ## Chapter Insights
 
 ### 1
@@ -247,7 +261,6 @@ $$
 	* Rosenbaum hints at the fact that distribution approximations are
 	  usually okay and are widely used in statistics. However, if one can
 	  avoid them, that is one assumption less to worry about being wrong.
-	* 
 
 ### Page 60 "So volunteering and self-selection in the randomized trial did nothing to create bias in the comparison of treated and control groups."
 
@@ -257,6 +270,13 @@ $$
   specifically, ensuring that random group assignment is performed **after**
   anyone that doesn't want to participate in the study drops out is what
   gaurantees the above sentence.
+
+### Page 84: "The problem [causation being inferred due to combining strata with different probabilities of receiving treatment] recurs because two randomized experiments with different probabilities $\pi_i$ were merged"
+
+* Does this mean that is is *always* valid to merge strata that had the same
+  probability of treatment $\pi_i = \pi_j$? I'm guessing that the answer to that
+  question depends on whether the data was generated from a randomized
+  experiment vs. observed in the world (observational data)...
 
 ### Page 271: "...Do high-level NICU's save more lives?"
 
