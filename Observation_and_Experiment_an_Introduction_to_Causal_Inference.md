@@ -34,6 +34,24 @@
   beauty of randomization and there is no way to get around the infinite regress
   with observational studies).
 
+* Quote (page 105): "The absence of an obvious reason to think that two groups
+  are different falls well short of a compelling reason to think they are the
+  same."
+
+* Quote (page 107): "Can an observational study be more than reasonably
+  compelling? Arguably, it has happened once or twice, but reasonably compelling
+  studies are rare to begin with."
+
+* Quote (page 134): "The mere existence of consensus is not a useful guide. We
+  should ask, Does a consensus have its origins and its ground in a rational and
+  comprehensive appraisal of the evidence? Has the available evidence been open
+  to vigorous challeng, and has it met each challenge? If a consensus has these
+  origins, then the existence of consensus is of little consequence beyond it's
+  important origins"
+  * Objective Reality is the ultimate Truth. The prevalence of an opinion (a
+    "consensus") not based on objective reality, no matter how widely held, has
+    absolutely zero bearing on its Truthfulness.
+
 ## Chapter Insights
 
 ### 1
@@ -224,6 +242,48 @@ all.equal( manual_p_val, comp_p_val )
   probabilities of treatment are different, $\pi_i \ne \pi_j$, due to some
   unmeasured covariate.
 
+### 7
+
+* **Elaborate Theories & The Crossword Puzzle Analogy**: (page 119) "About 20
+  years ago, when asked in a meeting what can be done in observational studies
+  to clarify the step from association to causation, Sir Ronald Fisher replied:
+  'Make your theories elaborate'."
+
+  "An elaborate theory makes extensive predictions about what will be observed,
+  so it is less likely to be true that a theory that makes fewer predictions,
+  and it is more likely to be contradicted by observed data." (page 124)
+
+  It is important to recognize that structuring a scientific investigation this
+  way is an effort to ensure that the theory must "do more work" to prove
+  itself, as opposed to simpler, less elaborate theories which could pass with
+  less support of their truth (remember, the goal is not to *prove* a theory,
+  but rather to try and *disprove* it and be unable to do so). This leads to the
+  second important aspect of elaborate theories; since the multi-dimensional
+  predictions of an elaborate theory can be (must be) checked against observed
+  data, evidence of causal effect in an elaborate theory is almost certainly
+  going to be predicated on the conclusions of **many** studies, **not just
+  one.** More importantly, "The critical issue is whether the vulnerability
+  that makes one study doubtful is absent from another study."
+
+  This brings us to the Crossword Puzzle Analogy. When deciding whether a word
+  is the desired entry into a crossword, there are multiple points of contact
+  with what is known; you have the clue given with the puzzle, in addition to
+  the other entries that intersect with the one in question, providing evidence
+  that the word you are considering is a most likely a "good fit." The same
+  theme is true with elaborate theories and observational studies; much of the
+  evidence that an elaborate theory is true is built on the intersection of
+  themes within multiple studies.
+
+  If one study is vulnerable to the claim "unobserved covariate $u_1$ is the
+  reason for the results, not a treatment effect," but another study clearly
+  accounts for that unobserved covariate $u_1$ (perhaps it is no longer
+  unobserved and is this time explicitly measured and matched for), one must
+  justify continued skeptism of the theory by the claim that $u_2$ is now the
+  culprit of a perceived treatment effect. As this continues, a true elaborate
+  theory will continually answer claims of bias via additional studies that
+  explicitly control for that bias.
+
+
 ## Reasoning Checks
 
 ### Page 36: "There are 70 ways to pick $m = 4$ patients for treatment from $I = 8$."
@@ -238,8 +298,8 @@ the **bold 0** doesn't change that fact), the formula for combinations should be
 used:
 
 $$
-{n \choose k} = \frac{ n! }{ (n - k)! \cdot k! } = \frac{ 8! }{ (8 - 4)! \cdot
-4! } = \frac{ 8! }{ 4! \cdot 4!} =
+{n \choose k} = \frac{ n! }{ (n - k)! \cdot k! } = \frac{ 8! }{ (8 - 4)!
+\cdot 4! } = \frac{ 8! }{ 4! \cdot 4!} =
 
 \frac{8 \cdot 7 \cdot 6 \cdot 5 \cdot \cancel{ 4 } \cdot \cancel{ 3 } \cdot
 \cancel{2} \cdot \cancel{1}}{4 \cdot 3 \cdot 2 \cdot 1 \cdot \cancel{ 4 } \cdot
@@ -256,11 +316,12 @@ each number below indicates the patient ID, while the number 1 or 0 indicates if
 patient $i$ was in the treatment group (1) or the control group (0).
 
 $$
-\left[ 1_1,1_2,1_3,1_4,0_5,0_6,0_7,0_8 \right] \\ \left[
-1_1,1_2,1_3,0_4,1_5,0_6,0_7,0_8 \right] \\ \left[
-1_1,1_2,1_3,0_4,0_5,1_6,0_7,0_8 \right] \\ \vdots \\ \left[
-0_1,0_2,0_3,1_4,0_5,1_6,1_7,1_8 \right] \\ \left[
-0_1,0_2,0_3,0_4,1_5,1_6,1_7,1_8 \right] \\
+\left[ 1_1,1_2,1_3,1_4,0_5,0_6,0_7,0_8 \right] \\
+\left[ 1_1,1_2,1_3,0_4,1_5,0_6,0_7,0_8 \right] \\
+\left[ 1_1,1_2,1_3,0_4,0_5,1_6,0_7,0_8 \right] \\
+\vdots \\
+\left[ 0_1,0_2,0_3,1_4,0_5,1_6,1_7,1_8 \right] \\
+\left[ 0_1,0_2,0_3,0_4,1_5,1_6,1_7,1_8 \right] \\
 $$
 
 Re-written to illustrate the the probabilistic underpinnings of the "Binary
@@ -272,13 +333,17 @@ that patient $i$ ended up in the control group (0), whereas a normal typeface
 $0.5_i$ will indicate that patient $i$ ended up in the treatment group (1))
 
 $$
-\left[ 0.5_1,0.5_2,.0.5_3,0.5_4,\pmb{ 0.5_5 },\pmb{ 0.5_6 },\pmb{ 0.5_7 },\pmb{
-0.5_8 } \right] \\ \left[ 0.5_1,0.5_2,.0.5_3,\pmb{ 0.5_4 },0.5_5,\pmb{ 0.5_6
-},\pmb{ 0.5_7 },\pmb{ 0.5_8 } \right] \\ \left[ 0.5_1,0.5_2,.0.5_3,\pmb{ 0.5_4
-},\pmb{ 0.5_5 },0.5_6,\pmb{ 0.5_7 },\pmb{ 0.5_8 } \right] \\ \vdots \\ \left[
-\pmb{ 0.5_1 },\pmb{ 0.5_2 },.\pmb{ 0.5_3 },0.5_4,\pmb{ 0.5_5 },0.5_6,0.5_7,0.5_8
-\right] \\ \left[ \pmb{ 0.5_1 },\pmb{ 0.5_2 },.\pmb{ 0.5_3 },\pmb{ 0.5_4
-},0.5_5,0.5_6,0.5_7,0.5_8 \right] \\
+\left[ 0.5_1,0.5_2,.0.5_3,0.5_4,\pmb{ 0.5_5 },\pmb{ 0.5_6 },\pmb{ 0.5_7
+},\pmb{ 0.5_8 } \right] \\
+\left[ 0.5_1,0.5_2,.0.5_3,\pmb{ 0.5_4 },0.5_5,\pmb{
+0.5_6 },\pmb{ 0.5_7 },\pmb{ 0.5_8 } \right] \\
+\left[ 0.5_1,0.5_2,.0.5_3,\pmb{
+0.5_4 },\pmb{ 0.5_5 },0.5_6,\pmb{ 0.5_7 },\pmb{ 0.5_8 } \right] \\
+\vdots \\
+\left[ \pmb{ 0.5_1 },\pmb{ 0.5_2 },.\pmb{ 0.5_3 },0.5_4,\pmb{ 0.5_5
+},0.5_6,0.5_7,0.5_8 \right] \\
+\left[ \pmb{ 0.5_1 },\pmb{ 0.5_2 },.\pmb{ 0.5_3
+},\pmb{ 0.5_4 },0.5_5,0.5_6,0.5_7,0.5_8 \right] \\
 $$
 
 The above is the "expanded" version of the Binomial PMF (shown below) when $n =
@@ -290,16 +355,15 @@ $$
 $$
 
 Reading the above within the context of the Binomial PMF, this says, "The
-probability that one observes $k = 4$ successes out of $n = 8$ independent trials
-is equal to 0.27"
+probability that one observes $k = 4$ successes out of $n = 8$ independent
+trials is equal to 0.27"
 
 $$
 \begin{align}
 
 P(X = k) & = {n \choose k} ( P )^k (1 - P)^{n -k} \\
 & = (70) ( 0.5 )^4 ( \pmb{ 0.5 } )^4 \\
-& = (70) ( 0.5 )^8 \\
-P(X = 4) & = 0.2734
+& = (70) ( 0.5 )^8 \\ P(X = 4) & = 0.2734
 
 \end{align}
 $$
@@ -359,7 +423,7 @@ that might bias the outcome)
 ### Page 349: Fisher's null hypothesis of no difference in treatment effects
 
 "This null hypothesis, $H_0$, asserts that each person would have the same
-response under treatment as under control, $r_{Ti} - r_{Ci} = 0$ for $i = 1,
-\cdots, I$, or equivalently, $\delta_i = 0$ for $i = 1, \cdots , I$. Often
-abbreviated as Fisher's hypothesis of no effect."
+response under treatment as under control, $r_{Ti} - r_{Ci} = 0$ for
+$i = 1, \cdots, I$, or equivalently, $\delta_i = 0$ for $i = 1, \cdots , I$.
+Often abbreviated as Fisher's hypothesis of no effect."
 
