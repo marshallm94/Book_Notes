@@ -52,6 +52,23 @@
     "consensus") not based on objective reality, no matter how widely held, has
     absolutely zero bearing on its Truthfulness.
 
+* Quote (page 137): "To say two tests are statistically independent under the
+  null hypothesis $H_0$ of no treatment effect is to say that if $H_0$ were true
+  then the result of the first test would provide precisely no information about
+  the result of the second...To say that two analyses are vulnerable to different biases
+  is to say that the first analysis would be correct if treatment assignment
+  were ignorable in one sense, and that the second analysis would be correct if
+  treatment assignment were ignorable in a second sense, *but massive failures
+  of the first sense would not bias the second analysis, and massive failures in
+  the second sense would not bias the first analysis.* **This is a much stronger
+  property than statistical independence.**"
+  * Ignorable treatment assignment occurs when two people with the same values
+    of covariates have the same probability of treatment $\pi_i = \pi_j$ - this
+    does not change the fact that these two people $i \text{ and } j$ could both
+    be subject to some unobserved bias that alters the conclusion - remember the
+    goal is to think of ways in which a hypothesis could be wrong, attempt to
+    prove those hypotheses to be true, and continually fail.
+
 ## Chapter Insights
 
 ### 1
