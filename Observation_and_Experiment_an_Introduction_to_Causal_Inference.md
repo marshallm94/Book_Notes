@@ -69,6 +69,10 @@
     goal is to think of ways in which a hypothesis could be wrong, attempt to
     prove those hypotheses to be true, and continually fail.
 
+* Quote (page 142): "In the absence of random assignment, there are two possible
+  explanations of a difference in treated and control groups; a treatment effect
+  or a bias in the formation of the groups."
+
 ## Chapter Insights
 
 ### 1
@@ -300,6 +304,43 @@ all.equal( manual_p_val, comp_p_val )
   theory will continually answer claims of bias via additional studies that
   explicitly control for that bias.
 
+### 9
+
+* (page 171): "A sensitivity analysis asks, How would the results of the
+  calculation, or the conclusion, change if the assumptions were changed by a
+  limited amount...How large would the violation of the assumptions have to be
+  to materially alter the conlusion?"
+
+  Ignorable treatment assignment, once again, means that two people
+  $i \text{ and } j$ who look the same with respect to measured covariates $x_i = x_j$
+  have the same probability of receiving treatment $\pi_i = \pi_j$. PSM
+  (Propensity Score Matching) ensures that in a given pair $P$, there is one
+  treatment and one control, and the subjects are matched for a/some covariates,
+  and the others are checked to be within a reasonable range of one another. So,
+  if the Ignorable treatment assignment assumption is true,
+  then $\pi_i = \pi_j$, and since there is one treatment subject and one
+  control subject, the probability that either is treatment is $\theta = 0.5$.
+  However, the "if ignorable treatment assignment..." statement is a big if.
+
+  A sensitivity analysis **quantifies** the departure from ignorable treatment
+  assignment. Even though we have used PSM to match as best we can, what if
+  $\pi_i \ne \pi_j$? Since $\pi_i \ne \pi_j$, then $\theta \ne 0.5$; how far off
+  of 0.5 must $\theta$ be in order to change the conclusion?
+
+  The table on page 178 shows various measures of this "departure from 0.5".
+  This is useful against the common critique of observational studies; "the
+  treatment effect you are picking up isn't a treatment effect at all, but an
+  unmeasured covariate $u_1$ that is changing who receives treatment." Although
+  this is always a valid concern with observational studies, if the investigator
+  has performed a sensitivity analysis, this statement is now quantified.
+
+  Example: If an investigator has performed a sensitivity analysis and 
+  confirmed that the conclusion of the study is insensitive to bias up to a
+  gamma value of 3, $\Gamma = 3$, one can see in the table that $\theta$ can be
+  anywhere in the range [0.25, 0.75]. This means that one subject ( in a pair )
+  may indeed have a higher propensity towards treatment, but that probability can
+  be 3 times that of the control $(3 \cdot 0.25 = 0.75)$ **before the conclusion
+  of the study would materially change.**
 
 ## Reasoning Checks
 
@@ -443,4 +484,5 @@ that might bias the outcome)
 response under treatment as under control, $r_{Ti} - r_{Ci} = 0$ for
 $i = 1, \cdots, I$, or equivalently, $\delta_i = 0$ for $i = 1, \cdots , I$.
 Often abbreviated as Fisher's hypothesis of no effect."
+
 
