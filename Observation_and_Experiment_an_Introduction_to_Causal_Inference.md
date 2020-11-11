@@ -1,8 +1,8 @@
-[TOC]
-
 # Observation and Experiment: An Introduction to Causal Inference
 
 [Book Link](https://www.amazon.com/Observation-Experiment-Introduction-Causal-Inference/dp/0674241630/ref=sr_1_1?crid=UQIIXTVGBIRX&dchild=1&keywords=observation+and+experiment+an+introduction+to+causal+inference&qid=1601735207&sprefix=Observation+and+ex%2Caps%2C157&sr=8-1)
+
+[TOC]
 
 ## Unorganized Thoughts
 
@@ -341,6 +341,77 @@ all.equal( manual_p_val, comp_p_val )
   may indeed have a higher propensity towards treatment, but that probability can
   be 3 times that of the control $(3 \cdot 0.25 = 0.75)$ **before the conclusion
   of the study would materially change.**
+
+### 11 - Matching Techniques
+
+* Creating the most effective matched pairs one can comes down to a problem of
+  minimizing the total distance between pairs, similar to RSS in linear regression or
+  ICV (Intra-Cluster Variance) in Kmeans. Typically, a margin of error is set
+  on the propensity score, so two scores must be within a given distance of one
+  another $| \pi_i - \pi_j | \leq k$
+
+* (page 218) "So a simple distance places a caliper on the propensity score;
+  when persons $i$ and $j$ are within the caliper on the propensity score, it
+  defines the distance between $i$ and $j$ to be a robust version of the
+  [ Mahalanobis distance ](https://en.wikipedia.org/wiki/Mahalanobis_distance)"
+
+* As mentioned earlier in the book, matching across all covariates measured is
+  impossible, so tradeoffs must be made. Does allowing a marginal increase in
+  the dissimilarity between $x_{i,1}$ and $x_{j,1}$ allow $x_{i,2}$ and $x_{j,2}$
+  to be a better match? This must be considered, and the problem context at hand
+  should have a say in how this decision is made (if $x_1$ is thought to be an
+  effect modifier, than it should be exactly matched for, while $x_2$ should be
+  allowed to vary a little, although still checked, simply by using the
+  propensity score).
+
+* As with all things related to probability, propensity scores work best when
+  you have the Law of Large Number on your side; if the N in the study is
+  sufficiently large, using the propensity score alone will likely lead to
+  treatment and control groups that are well balanced across many covariates
+  (still check covariate balance table though...)
+
+  In small N studies, **or in studies where certain aspects of patients are
+  sparse across many covariates**, the propensity score might not be enough.
+  Additionally, if these aspects/covariates are important to the study aims, one
+  might want to force balance (referred to as "fine balance") between the
+  treatment and control groups.
+
+  **Remember, "You are almost always optimizing, and very rarely maximizing."**
+  This means that in order to match for sparse values of one or more covariates,
+  you are probably going to have to let some other covariates and/or the
+  propensity score become less balanced than they otherwise would have been.
+
+* **Risk Set Matching:** Fairly often, one would like to investigate the causal
+  effect of a treatment that occurred for some subjects, but did not occur for
+  others.
+
+  In order to do this properly, subjects that were treated at timepoint
+  $t$ should be matched with a control, **based on the control's covariates at
+  timepoint $t$**. There is the possibility that the control subject in this
+  pair becomes treated at a later timepoint $t' \gt t$, and that is okay;
+  assuming the treatment has a positive outcome for explanations' sake, it
+  simply changes the hypothetical conclusion from "Treatment had a positive
+  outcome" to "Being treated earlier is is better than being treated later."
+
+  If the control does not become treated later, than the hypothesis is rather
+  simple:
+	* $H_0$: Being treated does not improve outcomes.
+	* $H_a$: Being treated improves outcomes.
+
+  Since the treatment and control groups either receive treatment or not, this a
+  a "normal" hypothesis test.
+
+  If the control **does** become treated later, than the hypothesis
+  might be set up as the following:
+	* $H_0$: Being treated earlier does not improve outcomes.
+	* $H_a$: Being treated earlier improves outcomes.
+
+  In this setting, both the treatment and control receive treatment, **however
+  the defining characteristic is that those in the treatment group received
+  treatment earlier than those in the control group.** Since matching occurred
+  at the timepoint that the treatment subject received treatment, we are getting
+  at the question, "What would have happened if we had waited to treat the
+  subject?"
 
 ## Reasoning Checks
 
