@@ -311,7 +311,7 @@ all.equal( manual_p_val, comp_p_val )
 
   This is where teasing apart the *individual* effect of a treatment is tricky.  How do you know that the outcome you
   are observing is due to treatment A, and not due to treatment B, or the interaction between treatment A and treatment
-  B, both of which are *caused* by generic unobserved bias $b$?
+  B, both of which are *caused* by generic unobserved bias $u$?
 
   When accounting for this in observational studies, especially when using matching in observational studies, it is
   important to think about what you want to match on.
@@ -326,25 +326,40 @@ all.equal( manual_p_val, comp_p_val )
   covariates; age, education level, parental involvement in parent-teacher confererences....
 
   The goal is to determine if prenatal alcohol consumption **alone** has a causal effect on long term career success.
-  Prenatal alcohol consumption is likely a good indicator of poor parenting. What else does this lead to?
+  Prenatal alcohol consumption is likely a good indicator of poor parenting. What else does poor parenting this lead to?
   1. Poor care of the child during its formative years?
   2. Lack of involvement in the child's educational development?
   3. Lack of involvement in the child's emotional development?
 
-  Each of these poses a problem to the study. The generic unobserved bias is parental care. A mechanical investigator
-  might go about his matching algorithm, matching on the parents involvement in 
+  Each of these poses a problem to the study. The generic unobserved bias is poor parenting. A mechanical investigator
+  might go about his matching algorithm, matching on the parents involvement in parent-teacher conferences, presence at
+  the child's sporting events, amount of play time spent with their child, etc. What you end up with are some pairs whose
+  parents:
+  * **Never** go to parent-teacher confererences, **Never** go to the child's sporting events and **Never** spend any
+    play time with their child.
 
-  Think about the fact that, "At the most elementary level, a well designed observational study resembles, as closely as
-  possible, a simple randomized experiment." (The Design of Observational Studies, page 4) How would a generic
-  unobserved bias be distributed in a simple randomized experiment?
+  or...
 
-  Roughly evenly. That is the beauty of randomization.
+  * **Always** go to parent-teacher confererences, **always** go to the child's sporting events and **always** spend a
+    lot of play time with their child.
 
-  In an observational study, we would like to resemble this as closely as possible.
+  This might (most likely will) bias the study; how do we know that the presence (or lack thereof) of the parents in the
+  child's life was the cause of the child's career "success"?
 
-  In an observational study, **you want to match on a "value" of the unobserved generic bias**. This obviously isn't
-  directly possible, so coming close is as best we can hope to do. This sometimes means that the observed covariate you
-  use as a proxy for the generic unobserved bias **will intentionally have less than perfect matches.**
+  In order to determine if prenatal alcohol consumption **alone** has an effect on long term career success, ideally we
+  would be able to decouple poor parenting from prenatal alcohol consumption. One way to do this is **intentionally pair
+  subjects with different values of observed covariate $x$.** *The goal of this process is to match (as best as possible)
+  on the value of the unobserved generic bias $u$.*
+
+  So, continuing with the example, one might intentionally create a pair $i,j$ where:
+  * Subject $i$'s parents usually show up to parent-teacher confererences and subject $j$'s parents usually do not show
+    up.
+  * Subject $i$'s parents usually are not at the child's sporting events and subject $j$'s parents usually are.
+  * etc.
+
+  A pair like the above is a pair where both subject's parents are likely to have a middle "value" of the unobserved
+  generic bias $u$. That is, by creating a pair that isn't a good match on values of observed covariates, we have a
+  created a pair that is a good match on the value of the more important unobserved covariate.
 
 ## Reasoning Checks
 
