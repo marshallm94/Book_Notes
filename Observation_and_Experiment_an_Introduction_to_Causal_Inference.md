@@ -361,6 +361,26 @@ all.equal( manual_p_val, comp_p_val )
   generic bias $u$. That is, by creating a pair that isn't a good match on values of observed covariates, we have a
   created a pair that is a good match on the value of the more important unobserved covariate.
 
+### 13 - Instruments
+
+* Quote (page 258): "An instrument is a random push towards receiving one treatment rather than another, a push that is
+  without consequences for outcomes unless it succeeds in changing the treatment received."
+
+* Quote (page 267): "The exclusion restriction means that the average effect of encouragement, $\bar{\delta}$, is an
+  average of many zeros for people who would not heed encouragement and some possibly nonzero $\delta_i$'s for compliers
+  who heed encouragement."
+
+* Exlusion Restriction: In a "normal" randomized experiment, the subjects that are assigned to the treatment group all
+  receive the treatment. Therefore, the average effect, $\bar{\delta}$, is averaged across the number of people in the
+  treatment group.
+
+  Since instruments are about *some* people being pushed towards one treatment in favor of another, the average effect,
+  $\bar{\delta}$, **is only averaged over those who actually received the treatment.**
+
+
+![](images/Observation_and_Experiment_an_Introduction_to_Causal_Inference/exclusion_restriction.png)
+
+
 ## Reasoning Checks
 
 ### Page 36: "There are 70 ways to pick $m = 4$ patients for treatment from $I = 8$."
@@ -437,20 +457,28 @@ $$
 	* Rosenbaum hints at the fact that distribution approximations are usually okay and are widely used in
 	  statistics. However, if one can avoid them, that is one assumption less to worry about being wrong.
 
-### Page 60 "So volunteering and self-selection in the randomized trial did nothing to create bias in the comparison of
-treated and control groups."
+### Page 60 "So volunteering and self-selection in the randomized trial did nothing to create bias in the comparison of treated and control groups."
 
 * This sentence touches again on a main theme of the book; random group assignment **ensures** that there isn't some
   unobserved group assignment algorithm, while this can never be gauranteed with observational studies. More
   specifically, ensuring that random group assignment is performed **after** anyone that doesn't want to participate in
   the study drops out is what gaurantees the above sentence.
 
-### Page 84: "The problem [causation being inferred due to combining strata with different probabilities of receiving
-treatment] recurs because two randomized experiments with different probabilities $\pi_i$ were merged"
+### Page 84: "The problem [causation being inferred due to combining strata with different probabilities of receiving treatment] recurs because two randomized experiments with different probabilities $\pi_i$ were merged"
 
 * Does this mean that is is *always* valid to merge strata that had the same probability of treatment $\pi_i = \pi_j$?
   I'm guessing that the answer to that question depends on whether the data was generated from a randomized experiment
   vs. observed in the world (observational data)...
+
+### Page 268: " If $\bar{\eta} \ne 0$ but $\bar{\eta}$ is near zero, then the parameter $\frac{\bar{\delta}}{\bar{ \eta }}$ is well defined, but estimates of $\frac{\bar{\delta}}{\bar{ \eta }}$ can be very unstable."
+
+* Presumably this has nothing to do with the concept of instruments or effect ratios, but is simply a low $n$ problem.
+  Since $\frac{\bar{\delta}}{\bar{ \eta }}$ is the "average effect of encouragement on compliers" $\bar{\eta}$ being
+  close to 0 means you have very few compliers (people who would change their behavior if encouraged but otherwise would
+  not change their behavior).
+
+  So the instability of the estimate is likely more due to the fact that the estimate is based on a small sample of
+  compliers.
 
 ### Page 271: "...Do high-level NICU's save more lives?"
 
@@ -464,8 +492,7 @@ treatment] recurs because two randomized experiments with different probabilitie
 	  NICU's being well above the average acuity of babies in lower rated NICU's.  Matching for acuity level (weeks
 	  premature, genetic complications, etc) would be the minimum needed to ensure comparability.
 
-### Page 272: "...The hope is that, having matched for many covariates, there is nothing special about mothers who live
-near or far from a hospital with a high-level NICU."
+### Page 272: "...The hope is that, having matched for many covariates, there is nothing special about mothers who live near or far from a hospital with a high-level NICU."
 
 * Since the mothers in this study were matched for socioeconomic status, one shouldn't run into the problem of
   "Wealthier mothers might have to superior hospitals" - very important to match for this covariate.
