@@ -58,7 +58,7 @@ The below list will serve as an ever evolving reading list.
 * An Introduction to Formal Logic, 2nd Ed. By Peter Smith
 * Practical Nonparametric Statistics, 3rd Ed. by W.J. Conover
 * Macroeconomics, 7th Ed. by Olivier Blanchard (MIT OCW course 14.02 textbook)
-* Science and Development of Muscular Hypertrophy 2nd Ed. by Brad Schoenfeld
 * Design of Experiments by Ronald Fischer
+* [Introduction to Linear Algebra, 5th Ed. by Gilbert Strang](Introduction_to_Linear_Algebra.md)
 * [The Emergence of Probability by Ian Hackling](https://www.amazon.com/Emergence-Probability-Philosophical-Statistical-Probabilistic/dp/0521685575/ref=pd_ybh_a_1?_encoding=UTF8&psc=1&refRID=H8HSS0SQ8SWMD416TC8K)
 * [Sampling Techniques by William Cochran](https://www.amazon.com/Sampling-Techniques-3rd-William-Cochran/dp/047116240X/ref=sr_1_1?dchild=1&qid=1605182286&refinements=p_27%3AWilliam+G.+Cochran&s=books&sr=1-1&text=William+G.+Cochran#customerReviews)

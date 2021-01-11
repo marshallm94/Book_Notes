@@ -1,0 +1,63 @@
+# Introduction to Linear Algebra, 5th Ed.
+
+[Book Link](https://www.amazon.com/Introduction-Linear-Algebra-Gilbert-Strang/dp/0980232775/ref=sr_1_2?dchild=1&keywords=Gilbert+strang&qid=1610361218&sr=8-2)
+
+[TOC]
+
+## Unorganized Thoughts
+
+## Chapter Insights
+
+## Reasoning Checks
+
+## Select Problems
+
+### Problem Set 1.2, Problem 34 (Page 21)
+
+**Current Text**
+
+Using `v = randn(3, 1)` in MATLAB, create a random unit vector $u = \frac{v}{||v||}$. Using `V = randn(3, 30)` create 30 more random unit vectors $U_j$. What is the average size of the dot products $|u \cdot U_j|$? In calculus, the average is $\int_0^\pi |cos \theta| \frac{d\theta}{\pi} = \frac{2}{\pi}$.
+
+**Suggested Text**
+
+* Changes: the 3 is changed to a 2 in both calls to `randn()`.
+
+Using `v = randn(2 1)` in MATLAB, create a random unit vector $u = \frac{v}{||v||}$. Using `V = randn(2, 30)` create 30 more random unit vectors $U_j$. What is the average size of the dot products $|u \cdot U_j|$? In calculus, the average is $\int_0^\pi |cos \theta| \frac{d\theta}{\pi} = \frac{2}{\pi}$.
+
+```python
+from plotnine import ggplot, aes, geom_histogram, geom_vline, facet_wrap
+import pandas as pd
+import numpy as np
+import numpy.linalg as la
+
+def sample_unit_circle(R_n=2, n=30, verbose_sanity_check=False):
+    # create random unit vector
+    v = np.random.randn(R_n, 1)
+    u = v / la.norm(v)
+    # create matrix of unit vectors
+    V = np.random.randn(R_n, n)
+    vector_lengths = np.sqrt( ( V * V ).sum(axis = 0) )
+    U = V / vector_lengths
+    # sanity check - should be 30 unit vectors
+    if verbose_sanity_check:
+        print(f"# Vectors = { len( ( U * U ).sum(axis = 0) ) }")
+        print(f"vector lengths = { ( U * U ).sum(axis = 0) }")
+    # get all dot products
+    return np.absolute( U.transpose().dot(u) ).mean()
+
+
+
+samples = {30: [], 50: [], 100: [], 200: []}
+repeats = 500
+for i in range(repeats):
+    for k in samples.keys():
+        samples[k].append(sample_unit_circle(n = k))
+
+
+df = pd.melt( pd.DataFrame(samples) )
+df.columns = ['Sample_N', 'Dot_Product_Mean']
+(ggplot(df, aes(x = 'Dot_Product_Mean'))
+    + geom_histogram(bins = 100)
+    + facet_wrap('Sample_N', nrow = 1)
+    + geom_vline(xintercept = 2/np.pi, color = 'blue'))
+```
