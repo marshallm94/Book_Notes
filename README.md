@@ -3,7 +3,14 @@
 A collection of notes that otherwise would have been scribbled on sticky notes
 or scraps of paper and shoved into their associated book.
 
-The below list will serve as an ever evolving reading list.
+## Notes
+* [Introduction to Linear Algebra, 5th Ed. by Gilbert Strang](Introduction_to_Linear_Algebra.md)
+* [Observation and Experiment: An Introduction to Causal Inference](Observation_and_Experiment_an_Introduction_to_Causal_Inference.md)
+* [An Introduction to Formal Logic, 2nd Ed.](An_Introduction_to_Formal_Logic.md)
+* [The Emergence of Probability](Emergence_of_Probability.md)
+
+
+## "Good Luck"-Taken Reading list
 
 * The Art of Data Science by Roger D. Peng
 * R for Data Science by Hadley Wickham
@@ -59,6 +66,4 @@ The below list will serve as an ever evolving reading list.
 * Practical Nonparametric Statistics, 3rd Ed. by W.J. Conover
 * Macroeconomics, 7th Ed. by Olivier Blanchard (MIT OCW course 14.02 textbook)
 * Design of Experiments by Ronald Fischer
-* [Introduction to Linear Algebra, 5th Ed. by Gilbert Strang](Introduction_to_Linear_Algebra.md)
-* [The Emergence of Probability by Ian Hackling](https://www.amazon.com/Emergence-Probability-Philosophical-Statistical-Probabilistic/dp/0521685575/ref=pd_ybh_a_1?_encoding=UTF8&psc=1&refRID=H8HSS0SQ8SWMD416TC8K)
 * [Sampling Techniques by William Cochran](https://www.amazon.com/Sampling-Techniques-3rd-William-Cochran/dp/047116240X/ref=sr_1_1?dchild=1&qid=1605182286&refinements=p_27%3AWilliam+G.+Cochran&s=books&sr=1-1&text=William+G.+Cochran#customerReviews)
