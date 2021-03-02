@@ -10,19 +10,29 @@
 
 ## Reasoning Checks
 
+* $n$ unkown variables in $m$ equations $=$ A solution space that fills $\mathbb{R}^{n-m}$
+
 ## Select Problems
 
-### Problem Set 1.2, Problem 34 (Page 21)
+There is an error in the text as it is written. Below is a description of the error and how it should be changed.
+
+### Problem Set 1.2
+
+#### 34 (Page 21)
 
 **Current Text**
 
-Using `v = randn(3, 1)` in MATLAB, create a random unit vector $u = \frac{v}{||v||}$. Using `V = randn(3, 30)` create 30 more random unit vectors $U_j$. What is the average size of the dot products $|u \cdot U_j|$? In calculus, the average is $\int_0^\pi |cos \theta| \frac{d\theta}{\pi} = \frac{2}{\pi}$.
+Using `v = randn(3, 1)` in MATLAB, create a random unit vector $u = \frac{v}{||v||}$. Using `V = randn(3, 30)` create 30
+more random unit vectors $U_j$. What is the average size of the dot products $|u \cdot U_j|$? In calculus, the average
+is $\int_0^\pi |cos \theta| \frac{d\theta}{\pi} = \frac{2}{\pi}$.
 
 **Suggested Text**
 
 * Changes: the 3 is changed to a 2 in both calls to `randn()`.
 
-Using `v = randn(2 1)` in MATLAB, create a random unit vector $u = \frac{v}{||v||}$. Using `V = randn(2, 30)` create 30 more random unit vectors $U_j$. What is the average size of the dot products $|u \cdot U_j|$? In calculus, the average is $\int_0^\pi |cos \theta| \frac{d\theta}{\pi} = \frac{2}{\pi}$.
+Using `v = randn(2 1)` in MATLAB, create a random unit vector $u = \frac{v}{||v||}$. Using `V = randn(2, 30)` create 30
+more random unit vectors $U_j$. What is the average size of the dot products $|u \cdot U_j|$? In calculus, the average
+is $\int_0^\pi |cos \theta| \frac{d\theta}{\pi} = \frac{2}{\pi}$.
 
 ```python
 from plotnine import ggplot, aes, geom_histogram, geom_vline, facet_wrap
@@ -60,4 +70,88 @@ df.columns = ['Sample_N', 'Dot_Product_Mean']
     + geom_histogram(bins = 100)
     + facet_wrap('Sample_N', nrow = 1)
     + geom_vline(xintercept = 2/np.pi, color = 'blue'))
+```
+
+### Problem Set 2.1
+
+#### 22 (Page 43)
+
+```python
+import numpy as np
+
+A = np.array([[1,2],[3,4]])
+x = np.array([5, -2])
+b = np.array([1, 7])
+
+A.dot(x) == b
+```
+
+#### 29 & 30 (Page 44)
+
+When the markov matrix A...
+
+$$
+A = 
+    \begin{bmatrix}
+    0.8 & 0.3 \\
+    0.2 & 0.7 \\
+    \end{bmatrix}
+$$
+
+...is multiplied by either $u_{0}$ or $v_{0}$...
+
+$$
+\begin{align}
+u_{0} & = 
+    \begin{bmatrix}
+    1 \\
+    0 \\
+    \end{bmatrix}
+\\
+v_{0} & = 
+    \begin{bmatrix}
+    0 \\
+    1 \\
+    \end{bmatrix}
+\end{align}
+$$
+
+...and the result of the multiplication is itself multiplied by $A$ repeatedly, both $u_{0}$ or $v_{0}$ approach the
+steady state vector...
+
+$$
+s = 
+    \begin{bmatrix}
+    0.6 \\
+    0.4 \\
+    \end{bmatrix}
+$$
+
+```python
+import numpy as np
+
+# 29
+A = np.array([[0.8, 0.3],[0.2, 0.7]])
+u_current = np.array([ [1],[0] ])
+for i in range(10):
+    print(u_current)
+    print(u_current.sum())
+    u_current = A.dot(u_current)
+
+
+# 30
+v_current = np.array([ [0],[1] ])
+for i in range(10):
+    print(v_current)
+    print(v_current.sum())
+    v_current = A.dot(v_current)
+
+
+steady_state = np.array([ [0.6],[0.4] ])
+for i in range(10):
+    print(steady_state)
+    print(steady_state.sum())
+    steady_state = A.dot(steady_state)
+
+
 ```
