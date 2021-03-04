@@ -155,3 +155,30 @@ for i in range(10):
 
 
 ```
+
+#### 32 (Page 44)
+
+Prompt:
+"Suppose $\mathbf{u}$ and $\mathbf{v}$ are the first two columns in a 3x3 matrix $\mathit{A}$. Which third columns
+$\mathbf{w}$ would make this matrix $\mathit{A}$ singular? Describe a typical column picture of $A\mathbf{x} = b$ in
+that singular case, and a typical row picture (for a random $\mathit{b}$).
+
+Answer:
+* Singular = non-invertible = some columns are linearly dependent on some others.
+
+Formally, $\mathbf{w} = a  \mathbf{u} + b \mathbf{v}$ describes all columns $\mathbf{w}$ that would make the matrix
+$\mathit{A}$ singular.
+
+**Column Picture**
+$\mathbf{u} \text{ and } \mathbf{v}$ define a plane in $\mathbb{R}^3$; $\mathbf{w}$ lies in that plane and thus the
+three vectors do not span all of $\mathbb{R}^3$. **If $\mathbf{b}$ lies in that plane, there are infinite solutions. If
+$\mathbf{b}$ does not lie in that plane, there are no solutions.** So, "how the picture looks" depends on $\mathbf{b}$
+(check out figure 1.6 in [Linear Algebra and Its Applications, 4th Ed.](https://www.amazon.com/Linear-Algebra-Its-Applications-4th/dp/0030105676/ref=sr_1_7?dchild=1&keywords=gilbert+strang&qid=1614860145&s=books&sr=1-7))
+
+**Row Picture**
+How the system "looks" once again depends on $\mathbf{b}$; there are two abstract possibilities:
+1. **Infinite solutions** - if two planes (aka equations) in $\mathbb{R}^3$ intersect in a line, and the third plane
+   *intersects both the other planes in the same line*, there are infinite solutions (the line itself).
+2. **No solution** - if two planes (aka equations) in $\mathbb{R}^3$ intersect in a line, and the third plane intersects
+   one or both of the other two planes *such that the the lines defined by the various intersections are parallel*, there
+   is no solution.
