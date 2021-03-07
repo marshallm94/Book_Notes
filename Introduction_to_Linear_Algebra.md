@@ -8,6 +8,15 @@
 
 ## Chapter Insights
 
+### 2
+
+$$
+\begin{align}
+\text{if } \mathbf{w} & = a  \mathbf{u} + b\mathbf{v} \text{ (linear transformation of vectors) }\\
+\text{then } \mathit{A}\mathbf{w} & = a \mathit{A}\mathbf{u} + b \mathit{A}\mathbf{v} \text{ (linear transformation of matrices) }
+\end{align}
+$$
+
 ## Reasoning Checks
 
 * $n$ unkown variables in $m$ equations $=$ A solution space that fills $\mathbb{R}^{n-m}$
@@ -182,3 +191,52 @@ How the system "looks" once again depends on $\mathbf{b}$; there are two abstrac
 2. **No solution** - if two planes (aka equations) in $\mathbb{R}^3$ intersect in a line, and the third plane intersects
    one or both of the other two planes *such that the the lines defined by the various intersections are parallel*, there
    is no solution.
+
+#### 34 (Page 45)
+
+Knowing that...
+
+$$
+\mathit{A}\mathbf{x} = \mathbf{b}
+$$
+
+...but being given the definitions of $\mathit{A}$ and $\mathbf{b}$ and
+asked to solve for $\mathbf{x}$ (as opposed to being given $\mathit{A}$ and $\mathbf{x}$ and being asked to solve for
+$\mathbf{b}$ - the "normal way of doing things"), I can use the below two equalities:
+
+$$
+\begin{align}
+\text{Equality }1:~& \mathit{A}\mathit{A}^{ -1 } = \mathit{I} = \mathit{A}^{ -1 }\mathit{A} \\
+\text{Equality }2:~& \mathit{I}\mathbf{x} = \mathbf{x}
+\end{align}
+$$
+
+...and "get back" to the "normal way of doing things":
+
+$$
+\begin{align}
+\mathit{A}\mathbf{x} & = \mathbf{b} && \text{ start } \\
+\mathit{A}^{ -1 }\mathit{A}\mathbf{x} & = \mathit{A}^{ -1 }\mathbf{b} &&\text{ multiply by }\mathit{A}^{ -1 } \\
+\mathit{I}\mathbf{x} & = \mathit{A}^{ -1 }\mathbf{b} && \text{ substituting Equality } 1 \text{ in left hand side } \\ 
+\mathbf{x} & = \mathit{A}^{ -1 }\mathbf{b} && \text{ using Equality } 2 \text{ on left hand side } \\ 
+\mathit{A}^{ -1 }\mathbf{b} & = \mathbf{x} && \text{ flipping things around for ease of readability } \\ 
+\end{align}
+$$
+
+```python
+import numpy as np
+
+A = np.array([[2,-1,0,0],[-1,2,-1,0],[0,-1,2,-1],[0,0,-1,2]])
+print(A)
+# [[ 2 -1  0  0]
+#  [-1  2 -1  0]
+#  [ 0 -1  2 -1]
+#  [ 0  0 -1  2]]
+b = np.array([1,2,3,4])
+A_inv = np.linalg.inv(A)
+x = A_inv.dot(b)
+print(x)
+# [4. 7. 8. 6.]
+
+
+```
