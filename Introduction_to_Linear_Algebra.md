@@ -240,3 +240,100 @@ print(x)
 
 
 ```
+
+#### 35 (Page 45)
+
+Since each row and column in $\mathit{S}$ have the same 9 numbers (1 - 9), if $\mathbf{x} = (1, 1, 1, ..., 1)$, then:
+
+$$
+\mathit{S}\mathbf{x} = 
+			    \begin{bmatrix}
+			    45 \\
+			    45 \\
+			    45 \\
+			    45 \\
+			    45 \\
+			    45 \\
+			    45 \\
+			    45 \\
+			    45 \\
+			    \end{bmatrix}
+$$
+
+```python
+out = sum( [i for i in range(1, 10)] )
+print(out)
+# 45
+```
+
+**Which row exchanges will produce another Sodoku matrix?**
+
+No matter how the rows are permuted, the columns will all still be valid; rearranging the order of the number 1 - 9
+doesn't change the fact that all those number will still be present in the each column. So the columns will take care of
+themselves.
+
+Since each 3x3 grid must also contain the numbers 1 - 9, any row permutations must keep the same group of the rows
+together. Therefore, for each group of 3 rows (3 groups total), there are $3! = 3 \cdot 2 \cdot 1 = 6$ different
+permutations *of those three rows*.
+
+*Leaf level*
+Thinking about one permutation *of the first block* of 3 rows, one permutation *of the second block* of 3 rows, there
+are 6 permutations *of the third block* of 3 rows.
+
+$$
+1 \cdot 1 \cdot 6 = 6 \\
+$$
+
+*Twig level*
+Expanding to think about one permutation *of the first block* of 3 rows, **all** 6 permutations *of the second block* of
+3 rows, each of which has 6 permutations of the third block of three rows. There are 36 valid permutations.
+
+$$
+1 \cdot 2 \cdot 6 = 6 \\
+1 \cdot 3 \cdot 6 = 6 \\
+\vdots \\
+1 \cdot 6 \cdot 6 = 36 \\
+$$
+
+*Branch level*
+Expanding again to think about **all** 6 permutations *of the first block* of 3 rows, each of which has 36 permutations
+of the second and third blocks of three rows. There are 216 valid permutations.
+
+$$
+\begin{align}
+\mathbf{ 1 } \cdot 2 \cdot 6 = & 6 \\
+\mathbf{ 1 } \cdot 3 \cdot 6 = & 6 \\
+\vdots \\
+\mathbf{ 1 } \cdot 6 \cdot 6 = & \text{ first } 36 \\
+\\
+\mathbf{ 2 } \cdot 2 \cdot 6 = & 6 \\
+\mathbf{ 2 } \cdot 3 \cdot 6 = & 6 \\
+\vdots \\
+\mathbf{ 2 } \cdot 6 \cdot 6 = & \text{ another } 36 \\
+\\
+\mathbf{ 3 } \cdot 2 \cdot 6 = & 6 \\
+\mathbf{ 3 } \cdot 3 \cdot 6 = & 6 \\
+\vdots \\
+\mathbf{ 3 } \cdot 6 \cdot 6 = & \text{ another } 36 \\
+\vdots \\
+\vdots \\
+\mathbf{ 6 } \cdot 2 \cdot 6 = & 6 \\
+\mathbf{ 6 } \cdot 3 \cdot 6 = & 6 \\
+\vdots \\
+\mathbf{ 6 } \cdot 6 \cdot 6 = & \text{ another } 36 \\
+\vdots \\
+6 \cdot 6 \cdot 6 = & 216 \text{ permutations of rows if the blocks of 3 remain unchanged } \\
+\end{align}
+$$
+
+*Root level*
+Expanding for the last time: thinking about **all** 6 permutations of the *3 blocks of 3 rows*, each of which has 216
+permutations of all 9 rows. **There are 1296 valid permutations of the rows of a Sodoku matrix.**
+
+$$
+\begin{align}
+& \left[\text{block permutations}, 1^{st}\text{ block row permutations}, 2^{nd}\text{ block row permutations}, 3^{rd}\text{ block row permutations} \right] \\
+& \left[6, 6, 6, 6 \right] \\
+& 6^4 = 1296 \\
+\end{align}
+$$
