@@ -1,3 +1,6 @@
+This book was read in conjunction with the [ MIT OCW 18.06SC Lectures ](https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/index.htm)
+and therefore the notes will be from both the book and the lectures.
+
 # Introduction to Linear Algebra, 5th Ed.
 
 [Book Link](https://www.amazon.com/Introduction-Linear-Algebra-Gilbert-Strang/dp/0980232775/ref=sr_1_2?dchild=1&keywords=Gilbert+strang&qid=1610361218&sr=8-2)
@@ -5,6 +8,14 @@
 [TOC]
 
 ## Unorganized Thoughts
+
+### Statistical Learning Tie-In: Structured Data as a "Snapshot" of a Population $f(x)$
+
+* Structured data is typically represented as an $n \text{ x } p$ matrix, where $n$ is interpreted as the
+  rows/observations, and $p$ is interpreted as the measured attributes/variables of those observations.
+* An image is also represented as an $n \text{ x } p$ matrix, where $n$ is interpreted as the height of the image and
+  $p$ is interpreted as the width of the image.
+* 
 
 ## Chapter Insights
 
@@ -337,3 +348,4 @@ $$
 & 6^4 = 1296 \\
 \end{align}
 $$
+
