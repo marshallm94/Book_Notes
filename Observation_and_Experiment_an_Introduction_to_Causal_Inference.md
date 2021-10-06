@@ -100,19 +100,32 @@
 
 Example:
 
-$$ \begin{align} \text{Observed Group Assignment Vector} & = \left[ T_1, T_2, C_3, T_4, T_5, T_6, C_7, C_8, C_9, C_{ 10
-} \right] \\ \text{Observed Response Vector} & = \left[ 1_1, 0_2, 0_3, 1_4, 1_5, 1_6, 0_7, 0_8, 1_9, 0_{ 10 } \right] \\
-\end{align} $$
+$$
+\begin{align}
+
+\text{Observed Group Assignment Vector} & = \left[ T_1, T_2, C_3, T_4, T_5, T_6, C_7, C_8, C_9, C_{ 10
+} \right] \\
+
+\text{Observed Response Vector} & = \left[ 1_1, 0_2, 0_3, 1_4, 1_5, 1_6, 0_7, 0_8, 1_9, 0_{ 10 } \right] \\
+\end{align}
+$$
 
 In this scenario, there are 10 subjects (see subscripts), with 5 in the control group and 5 in the treatment group.
 
-$$ {n \choose k} = \frac{ n! }{ (n - k)! \cdot k! } = \frac{ 10! }{ (10 - 5)! \cdot 5! } = \frac{ 10! }{ 5! \cdot 5!} =
+$$
+\begin{align}
 
-\frac{10 \cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot \cancel{ 5 } \cdot \cancel{ 4 } \cdot \cancel{ 3 } \cdot \cancel{2} \cdot
+{n \choose k} & = \frac{ n! }{ (n - k)! \cdot k! } \\
+& = \frac{ 10! }{ (10 - 5)! \cdot 5! } \\
+& = \frac{ 10! }{ 5! \cdot 5!} \\
+& = \frac{10 \cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot \cancel{ 5 } \cdot \cancel{ 4 } \cdot \cancel{ 3 } \cdot \cancel{2} \cdot
 \cancel{1}}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 \cdot \cancel{5} \cdot \cancel{ 4 } \cdot \cancel{ 3 } \cdot \cancel{2}
-\cdot \cancel{1}} =
+\cdot \cancel{1}} \\
+& = \frac{ 30,240 } { 120 } \\
+& = 252
 
-\frac{ 30,240 } { 120 } = 252 $$
+\end{align}
+$$
 
 Which means there are 252 ways to have 5 subjects in the treatment group and 5 subjects in the control group. Since our
 Group Assignment Vector is one of those 252, the probability it was chosen is $\frac{1}{252}$, just like all the others.
