@@ -28,6 +28,203 @@ $$
 \end{align}
 $$
 
+#### Elimination Algorithm
+
+Starting with the standard linear equation (below)...
+
+$$
+\begin{align}
+    A\bold{x} & = \bold{b} && \text{standard linear equation} \\
+    \begin{bmatrix}
+    a & b & c \\
+    d & e & f \\
+    g & h & i \\
+    \end{bmatrix}
+    & =
+    \begin{bmatrix}
+    x \\
+    y \\
+    z \\
+    \end{bmatrix} && \text{Note that the } \bold{x} \text{ is implicit in } A \text{ from this point forward}
+\end{align}
+$$
+
+...the goal is to find a series of matrices that transform $A\bold{x}$ into an upper triangular matrix $U$ such that back
+substitution can be used:
+
+$$
+    \begin{bmatrix}
+    a & b & c \\
+    0 & j & k \\
+    0 & 0 & l \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    m \\
+    n \\
+    o \\
+    \end{bmatrix}
+$$
+
+##### Step 1
+
+Use the first equation to create a matrix that creates all 0's below the first pivot (i.e. eliminates all numbers below
+the first pivot). This first 'elimination matrix' will have the following general form:
+
+$$
+    E_1 =
+    \begin{bmatrix}
+    1 & 0 & 0 \\
+    -\frac{d}{a} & 1 & 0 \\
+    -\frac{g}{a} & 0 & 1 \\
+    \end{bmatrix}
+$$
+
+Multiplying both sides of $A\bold{x} = \bold{b}$ by this first 'elimination matrix' results in:
+
+$$
+\begin{align}
+    E_1 \left( A\bold{x} \right)
+    & =
+    E_1 \left( \bold{b} \right)
+
+    \\
+
+    \begin{bmatrix}
+    1 & 0 & 0 \\
+    -\frac{d}{a} & 1 & 0 \\
+    -\frac{g}{a} & 0 & 1 \\
+    \end{bmatrix}
+    \left(
+    \begin{bmatrix}
+    a & b & c \\
+    d & e & f \\
+    g & h & i \\
+    \end{bmatrix}
+    \right)
+    & =
+    \begin{bmatrix}
+    1 & 0 & 0 \\
+    -\frac{d}{a} & 1 & 0 \\
+    -\frac{g}{a} & 0 & 1 \\
+    \end{bmatrix}
+    \left(
+    \begin{bmatrix}
+    x \\
+    y \\
+    z \\
+    \end{bmatrix}
+    \right)
+
+    \\
+
+    \begin{bmatrix}
+    a & b & c \\
+    \cancel{ a }\left( -\frac{d}{\cancel{ a }} \right)+d & b\left( -\frac{d}{a} \right)+e & c\left( -\frac{d}{a} \right)+f \\
+    \cancel{ a }\left( -\frac{g}{\cancel{ a }} \right)+g & b\left( -\frac{g}{a} \right)+h & c\left( -\frac{g}{a} \right)+i \\
+    \end{bmatrix}
+    & =
+    \begin{bmatrix}
+    x \\
+    x \left( -\frac{d}{a} \right)+y \\
+    x\left( -\frac{g}{a} \right)+z \\
+    \end{bmatrix}
+
+    \\
+
+    \begin{bmatrix}
+    a & b & c \\
+    0 & b\left( -\frac{d}{a} \right)+e & c\left( -\frac{d}{a} \right)+f \\
+    0 & b\left( -\frac{g}{a} \right)+h & c\left( -\frac{g}{a} \right)+i \\
+    \end{bmatrix}
+    & =
+    \begin{bmatrix}
+    x \\
+    x \left( -\frac{d}{a} \right)+y \\
+    x\left( -\frac{g}{a} \right)+z \\
+    \end{bmatrix}
+\end{align}
+$$
+
+##### Step 2
+
+Use the second equation of the resulting matrix of step 1 to create all 0's below the second pivot (i.e. eliminates all
+numbers below the second pivot - which in the 3x3 case is only 1). This second 'elimination matrix' will have the
+following general form:
+
+$$
+    E_2 =
+    \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & \left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ b\left( -\frac{d}{a} \right)+e } \right) & 1 \\
+    \end{bmatrix}
+$$
+
+Taking the result from step 1, and multiplying both sides by $E_2$, we get:
+
+$$
+\begin{align}
+    E_2 \left( E_1 A \bold{x} \right)
+    & =
+    E_2 \left( E_1 \bold{b} \right)
+
+    \\
+
+    \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & \left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ b\left( -\frac{d}{a} \right)+e } \right) & 1 \\
+    \end{bmatrix}
+    \left(
+    \begin{bmatrix}
+    a & b & c \\
+    0 & b\left( -\frac{d}{a} \right)+e & c\left( -\frac{d}{a} \right)+f \\
+    0 & b\left( -\frac{g}{a} \right)+h & c\left( -\frac{g}{a} \right)+i \\
+    \end{bmatrix}
+    \right)
+    & =
+    \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & \left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ b\left( -\frac{d}{a} \right)+e } \right) & 1 \\
+    \end{bmatrix}
+    \left(
+    \begin{bmatrix}
+    x \\
+    x \left( -\frac{d}{a} \right)+y \\
+    x\left( -\frac{g}{a} \right)+z \\
+    \end{bmatrix}
+    \right)
+
+    \\
+
+    \begin{bmatrix}
+    a & b & c \\
+    0 & b\left( -\frac{d}{a} \right)+e & c\left( -\frac{d}{a} \right)+f \\
+    0 & \cancel{ \left( b\left( -\frac{d}{a} \right)+e \right) }\left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ \cancel{ b\left( -\frac{d}{a} \right)+e } } \right)+\left( b\left( -\frac{g}{a} \right)+h \right) & \left( c\left( -\frac{d}{a} \right)+f \right)\left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ b\left( -\frac{d}{a} \right)+e } \right)+\left( c\left( -\frac{g}{a} \right)+i \right) \\
+    \end{bmatrix}
+    & =
+    \begin{bmatrix}
+    x \\
+    x \left( -\frac{d}{a} \right)+y \\
+    \left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ b\left( -\frac{d}{a} \right)+e } \right) \left( x \left( -\frac{d}{a} \right)+y \right) + \left( x\left( -\frac{g}{a} \right)+z \right) \\
+    \end{bmatrix}
+
+    \\
+
+    \begin{bmatrix}
+    a & b & c \\
+    0 & b\left( -\frac{d}{a} \right)+e & c\left( -\frac{d}{a} \right)+f \\
+    0 & 0 & \left( c\left( -\frac{d}{a} \right)+f \right)\left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ b\left( -\frac{d}{a} \right)+e } \right)+\left( c\left( -\frac{g}{a} \right)+i \right) \\
+    \end{bmatrix}
+    & =
+\end{align}
+$$
+
+
+### 3
+
 ## Reasoning Checks
 
 * $n$ unkown variables in $m$ equations $=$ A solution space that fills $\mathbb{R}^{n-m}$
