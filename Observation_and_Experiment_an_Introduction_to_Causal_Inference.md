@@ -83,7 +83,7 @@
 	* Typically used in an agricultural context to determine if fertilizer A was better than fertilizer B, a farm
 	  would be randomly divided into many plots and assign a plot to use either fertilizer A or B. **However, all
 	  plots were treated the same way (either fertilizer A or B) - giving the investigator an answer to the
-	  question, "What can be expected due to random variation?"
+	  question, "What can be expected due to random variation?"**
 
 * The wording of Fisher's hypothesis of no affect (see Page 349 reasoning check) is very useful in building the intution
   of causal inference in hypothesis testing.
@@ -130,7 +130,15 @@ $$
 Which means there are 252 ways to have 5 subjects in the treatment group and 5 subjects in the control group. Since our
 Group Assignment Vector is one of those 252, the probability it was chosen is $\frac{1}{252}$, just like all the others.
 
-```R Observed_Response_Vector Group_Assignment_Vector 0 1 Control   4 1 Treatment 1 4(T) ```
+```R
+Group_Assignment_Vector <- c('Treatment', 'Treatment', 'Control', 'Treatment', 'Treatment', 'Treatment', 'Control', 'Control', 'Control', 'Control')
+Observed_Response_Vector <- c(1, 0, 0, 1, 1, 1, 0, 0, 1, 0)
+table(Group_Assignment_Vector, Observed_Response_Vector)
+#                        Observed_Response_Vector
+# Group_Assignment_Vector 0 1
+#               Control   4 1
+#               Treatment 1 4
+```
 
 The contingency table above shows the relationship between the two variables.  The question now becomes, "In how many of
 the 252 possible group assignment vectors would we see a similar result?" More specifically, "What proportion of the 252
@@ -141,21 +149,29 @@ Once again, the wording of Fisher's hypothesis of no effect sets up a direct ans
 hypothesis states that the Observed Response Vector would not change, we can computationally create all 252 versions of
 the above table and calculate the T statistic and therefore the p value:
 
-```R ##################################### # Everything that could have happened #####################################
-Observed_Response_Vector <- c(1,0,0,1,1,1,0,0,1,0) possible_treatment_group_assignment_vectors <- t( combn(10, 5) )
+```R
+##################################### # Everything that could have happened #####################################
+Observed_Response_Vector <- c(1,0,0,1,1,1,0,0,1,0)
+possible_treatment_group_assignment_vectors <- t( combn(10, 5) )
 
-null_distribution_T <- c() for (i in 1:dim(possible_treatment_group_assignment_vectors)[1]) {
+null_distribution_T <- c()
+for (i in 1:dim(possible_treatment_group_assignment_vectors)[1]) {
 
-	idx <- possible_treatment_group_assignment_vectors[i,] group_assignment_vector <- rep(0, 10)
-	group_assignment_vector[idx] <- 1
+    idx <- possible_treatment_group_assignment_vectors[i,]
+    group_assignment_vector <- rep(0, 10)
+    group_assignment_vector[idx] <- 1
 
-	T_ <- group_assignment_vector %*% Observed_Response_Vector null_distribution_T <- c(null_distribution_T, T_) }
+    T_ <- group_assignment_vector %*% Observed_Response_Vector
+    null_distribution_T <- c(null_distribution_T, T_)
+}
 
 manual_p_val <- 2 * length( null_distribution_T[null_distribution_T >= 4] ) / length(null_distribution_T)
 
 ##################################### # What actually happened #####################################
-Observed_Treatment_Group_idx <- possible_treatment_group_assignment_vectors[22,] Observed_Group_Assignment_Vector <-
-rep(0, 10) Observed_Group_Assignment_Vector[Observed_Treatment_Group_idx] <- 1
+
+Observed_Treatment_Group_idx <- possible_treatment_group_assignment_vectors[22,]
+Observed_Group_Assignment_Vector <- rep(0, 10)
+Observed_Group_Assignment_Vector[Observed_Treatment_Group_idx] <- 1
 
 comp_p_val <- fisher.test( Observed_Group_Assignment_Vector, Observed_Response_Vector )[[ 'p.value' ]]
 
@@ -170,8 +186,7 @@ all.equal( manual_p_val, comp_p_val )
 * "The central problem in an observational study - **the problem that defines the distinction between a randomized
   experiment and an observational study** - is that treatments are not assigned to subjects at random."
 
-  The **Propensity Score** is at least one of, if not [the central
-  tool](https://academic.oup.com/biomet/article/70/1/41/240879?searchresult=1) in attempting to reign in the downstream
+  The **Propensity Score** is at least one of, if not [the central tool](https://academic.oup.com/biomet/article/70/1/41/240879?searchresult=1) in attempting to reign in the downstream
   effects of this fact. The propensity score is the conditional probability of treatment given the observed covariates,
   $P(Z = 1 | X)$.  In other words, given a data set, and two covariates (i.e age & sex), the propensity score of 50
   years old males is the average of the group assignment vector for 50 year old males. This can be interpretted as the
@@ -202,7 +217,7 @@ all.equal( manual_p_val, comp_p_val )
 * Note: The propensity score $\lambda_i$, is **not** the same as the *True* probability of treatment $\pi_i$. To
   reiterate, the propensity score is the **average** probability of treatment given observed covariate(s) $x$. **It is
   created from the data you have, and thus suffers from the same critique that all data sets suffer from; "What isn't
-  within the data that is effecting it?"**Two subjects could have the same propensity score because they have the same
+  within the data that is effecting it?"** Two subjects could have the same propensity score because they have the same
   measured covariates, $\lambda_i = \lambda_j$, however their actual probabilities of treatment are different, $\pi_i
   \ne \pi_j$, due to some unmeasured covariate.
 
@@ -277,11 +292,11 @@ all.equal( manual_p_val, comp_p_val )
 
 * As mentioned earlier in the book, matching across all covariates measured is impossible, so tradeoffs must be made.
   Does allowing a marginal increase in the dissimilarity between $x_{i,1}$ and $x_{j,1}$ allow $x_{i,2}$ and $x_{j,2}$
-  to be a better match? This must be considered, and the problem context at hand should have a say in how this decision
-  is made (if $x_1$ is thought to be an effect modifier, than it should be exactly matched for, while $x_2$ should be
+  to be a better match? This must be considered, **and the problem context at hand should have a say in how this decision
+  is made** (if $x_1$ is thought to be an effect modifier, than it should be exactly matched for, while $x_2$ should be
   allowed to vary a little, although still checked, simply by using the propensity score).
 
-* As with all things related to probability, propensity scores work best when you have the Law of Large Number on your
+* As with all things related to probability, propensity scores work best when you have the Law of Large Numbers on your
   side; if the N in the study is sufficiently large, using the propensity score alone will likely lead to treatment and
   control groups that are well balanced across many covariates (still check covariate balance table though...)
 
