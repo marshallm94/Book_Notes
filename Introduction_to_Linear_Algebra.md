@@ -30,6 +30,173 @@ $$
 
 #### Elimination Algorithm
 
+##### Abstract
+
+(This all assumes a nonsingular matrix)
+
+An $n \text{ x } n$ matrix $A$ will have $n$ total 'elimination matrices':
+
+$$
+\begin{align}
+E^n E^{n-1} E^{n-2} \cdots E^3 E^2 E^1 A\bold{x} & = E^n E^{n-1} E^{n-2} \cdots E^3 E^2 E^1 \bold{b} \\
+U\bold{x} & = \bold{c}
+\end{align}
+$$
+
+In order to make referencing each stage in elimination easier, let $T^n$ be the transformed matrix that results from
+multiplying $A$ by the first $n$ elimination matrices:
+
+$$
+\begin{align}
+T^0 & = A\bold{x} \\
+T^1 & = E^1 A\bold{x} \\
+T^2 & = E^2 E^1 A\bold{x} \\
+T^3 & = E^3 E^2 E^1 A\bold{x} \\
+T^n & = E^n E^{n-1} E^{n-2} \cdots E^3 E^2 E^1 A\bold{x}\\
+\end{align}
+$$
+
+To construct the $n^{th}$ elimination matrix, follow the below algorithm:
+
+1. Let $E^n$ be the elimination matrix used to create 0's below the $n^{th}$ pivot.
+2. The diagonal will be all 1's, all entries above the diagonal will all be 0, and all entries below the diagonal that
+   **are not in the $n^{th}$ column** will all be 0.
+3. All entries of $E^n$ in the $n^{th}$ column (below the 1 that is in the diagonal) will be:
+
+$$
+E^n_{i,n} = -\frac{ T^{ n-1 }_{i,n} }{ T^{ n-1 }_{n,n} }
+$$
+
+For example:
+
+$$
+\begin{align}
+    E^1 & =
+    \begin{bmatrix}
+    1 & 0 & 0 & 0 & \cdots & 0 \\
+    -\frac{ T^{ n-1 }_{i,n} }{ T^{ n-1 }_{n,n} } & 1 & 0 & 0 & \cdots & 0 \\
+    -\frac{ T^{ n-1 }_{i,n} }{ T^{ n-1 }_{n,n} } & 0 & 1 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+    -\frac{ T^{ n-1 }_{i,n} }{ T^{ n-1 }_{n,n} } & 0 & 0 & 0 & \cdots & 1 \\
+    \end{bmatrix}
+
+    E^2 && =
+    \begin{bmatrix}
+    1 & 0 & 0 & 0 & \cdots & 0 \\
+    0 & 1 & 0 & 0 & \cdots & 0 \\
+    0 & -\frac{ T^{ n-1 }_{i,n} }{ T^{ n-1 }_{n,n} } & 1 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & -\frac{ T^{ n-1 }_{i,n} }{ T^{ n-1 }_{n,n} } & 0 & 0 & \cdots & 1 \\
+    \end{bmatrix}
+
+    E^3 && =
+    \begin{bmatrix}
+    1 & 0 & 0 & 0 & \cdots & 0 \\
+    0 & 1 & 0 & 0 & \cdots & 0 \\
+    0 & 0 & 1 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & -\frac{ T^{ n-1 }_{i,n} }{ T^{ n-1 }_{n,n} } & 0 & \cdots & 1 \\
+    \end{bmatrix}
+
+    \\
+
+    & =
+    \begin{bmatrix}
+    1 & 0 & 0 & 0 & \cdots & 0 \\
+    -\frac{ T^{ 0 }_{2,1} }{ T^{ 0 }_{1,1} } & 1 & 0 & 0 & \cdots & 0 \\
+    -\frac{ T^{ 0 }_{3,1} }{ T^{ 0 }_{1,1} } & 0 & 1 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+    -\frac{ T^{ 0 }_{n,1} }{ T^{ 0 }_{1,1} } & 0 & 0 & 0 & \cdots & 1 \\
+    \end{bmatrix}
+
+    && =
+    \begin{bmatrix}
+    1 & 0 & 0 & 0 & \cdots & 0 \\
+    0 & 1 & 0 & 0 & \cdots & 0 \\
+    0 & -\frac{ T^{ 1 }_{3,2} }{ T^{ 1 }_{2,2} } & 1 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & -\frac{ T^{ 1 }_{n,2} }{ T^{ 1 }_{2,2} } & 0 & 0 & \cdots & 1 \\
+    \end{bmatrix}
+
+    && =
+    \begin{bmatrix}
+    1 & 0 & 0 & 0 & \cdots & 0 \\
+    0 & 1 & 0 & 0 & \cdots & 0 \\
+    0 & 0 & 1 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & -\frac{ T^{ 2 }_{n,3} }{ T^{ 2 }_{3,3} } & 0 & \cdots & 1 \\
+    \end{bmatrix}
+
+\end{align}
+$$
+
+##### Code 
+
+```python
+import unittest
+import numpy as np
+
+class EliminationSolver(object):
+    def __init__(self, A, b):
+        self.A = A
+        self.b = b
+        self.Es = np.array( [np.identity(self.A.shape[0]) for _ in range( self.A.shape[0]-1 )] )
+        self.bs = [self.b]
+        self.Ts = [self.A]
+    def solve(self, T, elim_step):
+        for i in range(elim_step, T.shape[0]-1):
+            if T[i+1,elim_step] != 0:
+                self.Es[elim_step][i+1,elim_step] = -(T[i+1,elim_step] / T[elim_step,elim_step])
+        self.Ts.append(self.Es[elim_step].dot(self.Ts[-1]))
+        self.bs.append(self.Es[elim_step].dot(self.bs[-1]))
+    def solve_iter(self):
+        total_elim_steps = self.A.shape[0]-1
+        for elim_step in range(total_elim_steps):
+            self.solve(T=self.Ts[-1], elim_step=elim_step)
+        final = np.array( self.Ts[-1] )
+        # NOTE: doesn't really count as 'from scratch' if you're using numpy's
+        # inverse function, does it now Marshall...
+        final_inv = np.linalg.inv(final)
+        self.solution = final_inv.dot(self.bs[-1])
+
+class TestCustomElimination(unittest.TestCase):
+    def test_1(self):
+        A = np.array([
+            [2,1,0,0],
+            [1,2,1,0],
+            [0,1,2,1],
+            [0,0,1,2]
+            ])
+        b = np.array([0,0,0,5]).reshape(-1,1)
+        np_test_result = np.linalg.solve(A, b)
+
+        solver = EliminationSolver(A=A, b=b)
+        solver.solve_iter()
+        print(solver.solution)
+
+        self.assertTrue(np.allclose( np_test_result, solver.solution, equal_nan=True ))
+    def test_2(self):
+        A = np.array([
+            [2,-1,0,0],
+            [-1,2,-1,0],
+            [0,-1,2,-1],
+            [0,0,-1,2]
+            ])
+        b = np.array([0,0,0,5]).reshape(-1,1)
+        np_test_result = np.linalg.solve(A, b)
+
+        solver = EliminationSolver(A=A, b=b)
+        solver.solve_iter()
+        print(solver.solution)
+
+        self.assertTrue(np.allclose( np_test_result, solver.solution, equal_nan=True ))
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+##### Example: 3x3 Matrix
+
 Starting with the standard linear equation (below)...
 
 $$
@@ -66,13 +233,13 @@ $$
     \end{bmatrix}
 $$
 
-##### Step 1
+###### Step 1
 
 Use the first equation to create a matrix that creates all 0's below the first pivot (i.e. eliminates all numbers below
 the first pivot). This first 'elimination matrix' will have the following general form:
 
 $$
-    E_1 =
+    E^1 =
     \begin{bmatrix}
     1 & 0 & 0 \\
     -\frac{d}{a} & 1 & 0 \\
@@ -84,9 +251,9 @@ Multiplying both sides of $A\bold{x} = \bold{b}$ by this first 'elimination matr
 
 $$
 \begin{align}
-    E_1 \left( A\bold{x} \right)
+    E^1 \left( A\bold{x} \right)
     & =
-    E_1 \left( \bold{b} \right)
+    E^1 \left( \bold{b} \right)
 
     \\
 
@@ -146,14 +313,14 @@ $$
 \end{align}
 $$
 
-##### Step 2
+###### Step 2
 
 Use the second equation of the resulting matrix of step 1 to create all 0's below the second pivot (i.e. eliminates all
 numbers below the second pivot - which in the 3x3 case is only 1). This second 'elimination matrix' will have the
 following general form:
 
 $$
-    E_2 =
+    E^2 =
     \begin{bmatrix}
     1 & 0 & 0 \\
     0 & 1 & 0 \\
@@ -161,10 +328,11 @@ $$
     \end{bmatrix}
 $$
 
-Taking the result from step 1, and multiplying both sides by $E_2$, we get:
+Taking the result from step 1, and multiplying both sides by $E^2$, we get:
 
 $$
 \begin{align}
+
     E_2 \left( E_1 A \bold{x} \right)
     & =
     E_2 \left( E_1 \bold{b} \right)
@@ -219,6 +387,12 @@ $$
     0 & 0 & \left( c\left( -\frac{d}{a} \right)+f \right)\left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ b\left( -\frac{d}{a} \right)+e } \right)+\left( c\left( -\frac{g}{a} \right)+i \right) \\
     \end{bmatrix}
     & =
+    \begin{bmatrix}
+    x \\
+    x \left( -\frac{d}{a} \right)+y \\
+    \left(- \frac{ b\left( -\frac{g}{a} \right)+h }{ b\left( -\frac{d}{a} \right)+e } \right) \left( x \left( -\frac{d}{a} \right)+y \right) + \left( x\left( -\frac{g}{a} \right)+z \right) \\
+    \end{bmatrix}
+
 \end{align}
 $$
 
