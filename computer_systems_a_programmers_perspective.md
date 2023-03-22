@@ -61,6 +61,7 @@ Lets define where these minimum and maximum values come from:
     * 2^N
     * So lets add this as a column:
 
+```
 | Type      | Storage (Bytes) | Storage (Bits)                          | Number of Combinations Available                                |
 | --------- | --------------- | --------------------------------------- | --------------------------------------------------------------- |
 | TINYINT   | 1               | `(Storage (Bytes) * 8)` == `1 * 8 = 8 ` | `(2 ^ Storage (Bits))` == `2 ^ 8  = 256`                        |
@@ -73,6 +74,7 @@ Lets define where these minimum and maximum values come from:
 | INT       | 4               | `(Storage (Bytes) * 8)` == `4 * 8 = 32` | `(2 ^ Storage (Bits))` == `2 ^ 32 = 4,294,967,296`              |
 | BIGINT    | 8               | `(Storage (Bytes) * 8)` == `8 * 8 = 64` | `(2 ^ Storage (Bits))` == `2 ^ 64 = 18,446,744,073,709,551,616` |
 | BIGINT    | 8               | `(Storage (Bytes) * 8)` == `8 * 8 = 64` | `(2 ^ Storage (Bits))` == `2 ^ 64 = 18,446,744,073,709,551,616` |
+```
 
 Once this is defined, the reasoning for the minimum and maximum values becomes clear:
 * For unsigned values:
