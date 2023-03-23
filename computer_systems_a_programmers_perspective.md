@@ -62,10 +62,10 @@ Lets define where these minimum and maximum values come from:
 | BIGINT    | 8               | (Storage (Bytes) * 8) == 8 * 8 = 64 | Unsigned           | 0             | 2^( 64 )-1    |
 ```
 
-* A bit can have 2 states, notated with either a 0 or a 1. So, given N bits to work with, **How many unique combinations
-  of `0` and `1` are there in N bits?**
-    * 2^N
-    * So lets add this as a column:
+* A bit can have 2 states, notated with either a 0 or a 1. So, given N bits to work with, the question is:
+    * **How many unique combinations of `0` and `1` are there in N bits?**
+        * Answer: `2^N`
+        * So lets add this as a column:
 
 ```
 | Type      | Storage (Bytes) | Storage (Bits)                      | Number of Combinations Available                            |
@@ -82,10 +82,15 @@ Lets define where these minimum and maximum values come from:
 | BIGINT    | 8               | (Storage (Bytes) * 8) == 8 * 8 = 64 | (2 ^ Storage (Bits)) == 2 ^ 64 = 18,446,744,073,709,551,616 |
 ```
 
-Once this is defined, the reasoning for the minimum and maximum values becomes clear:
+Once this is defined, the reasoning for the minimum and maximum values becomes a little clearer:
 * For unsigned values:
-    * Take the Number of Combinations Available and subtract 1 (this "1" is for storing the value `0`)
-* For signed values
+    * Take the Number of Combinations Available and subtract 1 (this "1" is for storing the value `0`) - this is the
+      maximum value.
+    * `0` is the minumum value
+* For signed values:
+    * Take the Number of Combinations Available, divide by 2, and make that number negative - this is the minumum value.
+    * Take the Number of Combinations Available, divide by 2 *and subtract 1* (this "1" is for storing the value `0`) -
+      this is the maximum value.
 
 ```
 | Type      | Storage (Bytes) | Storage (Bits)                      | Number of Combinations Available                            | Minimum Value | Maximum Value |
@@ -102,6 +107,59 @@ Once this is defined, the reasoning for the minimum and maximum values becomes c
 | BIGINT    | 8               | (Storage (Bytes) * 8) == 8 * 8 = 64 | (2 ^ Storage (Bits)) == 2 ^ 64 = 18,446,744,073,709,551,616 | 0             | 2^( 64 )-1    |
 ```
 
+All of this logic can be seen a little more clearly with a short program:
+
+```python
+# program
+bits_per_byte = 8
+n_bytes_available = [1, 2, 3, 4, 8]
+for i in n_bytes_available:
+    bits_available = i * bits_per_byte
+    unique_combinations_of_bits_available = 2**bits_available
+
+    # subtracting 1 combination to save for the "0" value
+    unsigned_max_value = ( unique_combinations_of_bits_available ) - 1
+    unsigned_min_value = 0
+
+    # subtracting 1 combination to save for the "0" value
+    signed_max_value = ( ( unique_combinations_of_bits_available ) / 2 ) - 1
+    signed_min_value = -( ( unique_combinations_of_bits_available ) / 2 )
+
+    print(f"{i} byte(s) = ...")
+    print(f'\t{bits_available} bits')
+    print(f'\tUnique combinations of {bits_available} bits = {unique_combinations_of_bits_available:,}')
+    print(f'\tSigned range using {unique_combinations_of_bits_available:,} unique combinations: [{int( signed_min_value ):,}, {int( signed_max_value ):,}]')
+    print(f'\tUnsigned range using {unique_combinations_of_bits_available:,} unique combinations: [{unsigned_min_value:,}, {unsigned_max_value:,}]')
+
+# output
+1 byte(s) = ...
+        8 bits
+        Unique combinations of 8 bits = 256
+        Signed range using 256 unique combinations: [-128, 127]
+        Unsigned range using 256 unique combinations: [0, 255]
+2 byte(s) = ...
+        16 bits
+        Unique combinations of 16 bits = 65,536
+        Signed range using 65,536 unique combinations: [-32,768, 32,767]
+        Unsigned range using 65,536 unique combinations: [0, 65,535]
+3 byte(s) = ...
+        24 bits
+        Unique combinations of 24 bits = 16,777,216
+        Signed range using 16,777,216 unique combinations: [-8,388,608, 8,388,607]
+        Unsigned range using 16,777,216 unique combinations: [0, 16,777,215]
+4 byte(s) = ...
+        32 bits
+        Unique combinations of 32 bits = 4,294,967,296
+        Signed range using 4,294,967,296 unique combinations: [-2,147,483,648, 2,147,483,647]
+        Unsigned range using 4,294,967,296 unique combinations: [0, 4,294,967,295]
+8 byte(s) = ...
+        64 bits
+        Unique combinations of 64 bits = 18,446,744,073,709,551,616
+        Signed range using 18,446,744,073,709,551,616 unique combinations: [-9,223,372,036,854,775,808, 9,223,372,036,854,775,808]
+        Unsigned range using 18,446,744,073,709,551,616 unique combinations: [0, 18,446,744,073,709,551,615]
+```
+
+# TODO( 2023-03-22 ): Walkthrough "Two's Complement Encodings"  
 
 ### 3
 
